@@ -7,7 +7,7 @@ void print_hi_n_times(int n) {
 }
 
 int main(int argc, char** argv) {
-    print_hi_n_times(6);
+    print_hi_n_times(5);
     return 0;
 }
 
