@@ -1,6 +1,6 @@
 # Ignore Executables
-*
-!*.*
+#*
+#!*.*
 
 # Prerequisites
 *.d
