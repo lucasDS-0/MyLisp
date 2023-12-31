@@ -2,7 +2,6 @@
 
 /* If we are compiling on Windows compile these functions */
 #ifdef _WIN32
-#include <string.h>
 
 static char buffer[2048];
 
@@ -27,10 +26,10 @@ void add_history(char* unused) {}
 
 /* Use operator string to see which operation to perform */
 long eval_op(long x, char* op, long y) {
-    if (strstr(op, "+") == 0) { return x + y; }
-    if (strstr(op, "-") == 0) { return x - y; }
-    if (strstr(op, "*") == 0) { return x * y; }
-    if (strstr(op, "/") == 0) { return x / y; }
+    if (strcmp(op, "+") == 0) { return x + y; }
+    if (strcmp(op, "-") == 0) { return x - y; }
+    if (strcmp(op, "*") == 0) { return x * y; }
+    if (strcmp(op, "/") == 0) { return x / y; }
     return 0;
 }
 
@@ -68,8 +67,8 @@ int main(int argc, char** argv) {
     /* Define the with the following Language */
     mpca_lang(MPCA_LANG_DEFAULT,
     "                                                      \
-        number   : /-?[0-9]+(.[0-9])?/ ;                            \
-        operator : '-' | '+' | '*' | '/' ;                 \
+        number   : /-?[0-9]+/ ;                            \
+        operator : '+' | '-' | '*' | '/' ;                 \
         expr     : <number> | '(' <operator> <expr>+ ')' ; \
         lips     : /^/ <operator> <expr>+ /$/ ;            \
     ",
@@ -83,8 +82,7 @@ int main(int argc, char** argv) {
         /* Now in either case readline will be correctly defined */
         char* input = readline("lips> ");
         add_history(input);
-                
-        //printf("Indeed, %s\n", input);
+
         /* Attempt to Parse the user Input */
         mpc_result_t r;
         if (mpc_parse("<stdin>", input, Lips, &r)) {
